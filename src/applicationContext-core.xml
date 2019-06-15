@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:jdbc.properties</value>
-			</list>
-		</property>
-	</bean>
+
 
 	<context:component-scan base-package="xyz.goudan.*"></context:component-scan>
 	<bean id="dataSource"
@@ -34,15 +28,15 @@
 		<property name="basePackage" value="xyz.goudan.mapper"></property>
 		<property name="sqlSessionFactory" ref="factory"></property>
 	</bean>
-
+	
 	<bean id="usersLoginService" class="xyz.goudan.service.impl.UsersLoginServiceImpl">
-		<property name="usersLoginMapper" ref="usersLoginMapper"></property>
+	<property name="usersLoginMapper" ref="usersLoginMapper"></property>
 	</bean>
-
+	
 	<bean id="usersInfoService" class="xyz.goudan.service.impl.UsersInfoServiceImpl">
-		<property name="usersInfoMapper" ref="usersInfoMapper"></property>
+	<property name="usersInfoMapper" ref="usersInfoMapper"></property>
 	</bean>
 
-
+	
 
 </beans>
