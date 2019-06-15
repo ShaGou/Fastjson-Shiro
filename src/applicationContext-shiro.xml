@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"></property>
+		<property name="loginUrl" value="/index.jsp"></property>
+		<property name="unauthorizedUrl" value="/error.jsp"></property>
+		<property name="filterChainDefinitions">
+			<value>
+				/login = anon
+				/* = authc
+			</value>
+		</property>
+	</bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="usersRealm"></property>
+		<property name="sessionManager" ref="sessionManager"></property>
+		<property name="rememberMeManager" ref="cookieRememberMeManager"></property>
+	</bean>
+
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="deleteInvalidSessions" value="true"></property>
+		<property name="globalSessionTimeout" value="1000000"></property>
+	</bean>
+
+
+	<bean id="usersRealm" class="xyz.goudan.realm.UsersRealm">
+	</bean>
+
+	<bean id="credentialsMatcher"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="md5"></property>
+		<property name="hashIterations" value="1"></property>
+	</bean>
+
+	<bean id="cookieRememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cookie" ref="cookie"></property>
+	</bean>
+
+	<bean class="org.apache.shiro.web.servlet.SimpleCookie" id="cookie">
+		<constructor-arg value="rememberMe"></constructor-arg>
+		<property name="maxAge" value="3000"></property>
+	</bean>
+</beans>
